@@ -23,7 +23,7 @@
   <img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=mysql&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
   <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" />
-  <img src="https://www.codewars.com/users/serenozin/badges/small" />
+  <img src="https://www.codewars.com/users/patryckalves/badges/small" />
 </a>
 </p>
 
