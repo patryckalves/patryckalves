@@ -15,7 +15,7 @@
       padding: 2rem;
     }
     .container {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
     }
     .ascii {
@@ -57,7 +57,7 @@
       margin-bottom: 1.5rem;
       overflow: hidden;
       position: relative;
-      height: 520px;
+      height: 560px;
     }
     .graph-section svg {
       width: 100%;
@@ -92,7 +92,7 @@
     .legend-dot.mlops { background: #58a6ff; }
     .legend-dot.experiment { background: #7ee787; }
     .legend-dot.foundation { background: #d2a8ff; }
-    .legend-dot.domain { background: #f0f6fc; }
+    .legend-dot.senior { background: #e3b341; }
 
     .links {
       display: flex;
@@ -141,7 +141,8 @@
 
     @media (max-width: 600px) {
       .ascii { font-size: 0.48rem; }
-      .graph-section { height: 380px; }
+      .graph-section { height: 420px; }
+      .legend { gap: 0.6rem; font-size: 0.72rem; }
     }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -179,11 +180,11 @@
     </p>
 
     <div class="legend">
-      <span class="legend-item"><span class="legend-dot domain"></span> Domain</span>
       <span class="legend-item"><span class="legend-dot risk"></span> Risk Modeling</span>
       <span class="legend-item"><span class="legend-dot mlops"></span> MLOps &amp; Infra</span>
       <span class="legend-item"><span class="legend-dot experiment"></span> Experimentation</span>
       <span class="legend-item"><span class="legend-dot foundation"></span> Foundation</span>
+      <span class="legend-item"><span class="legend-dot senior"></span> Senior Leadership</span>
     </div>
 
     <div class="graph-section" id="graph-container">
@@ -204,45 +205,53 @@
   // ── Graph data ─────────────────────────────────────────
   const graph = {
     nodes: [
-      // Domain anchors (larger)
-      { id: "Analytics\nEngineering", group: "domain", r: 28 },
-      { id: "Risk\nModeling", group: "risk", r: 22 },
-      { id: "MLOps\n& Infra", group: "mlops", r: 22 },
-      { id: "Experiment-\nation", group: "experiment", r: 22 },
+      // Center anchor
+      { id: "Analytics\nEngineering", group: "center", r: 30 },
+      // Domain anchors
+      { id: "Risk\nModeling", group: "risk", r: 24 },
+      { id: "MLOps\n& Infra", group: "mlops", r: 24 },
+      { id: "Experiment-\nation", group: "experiment", r: 24 },
 
       // Risk Modeling cluster
-      { id: "Fraud Risk\nScoring", group: "risk", r: 12 },
-      { id: "Statistical\nModeling", group: "risk", r: 12 },
-      { id: "Feature\nEngineering", group: "risk", r: 12 },
-      { id: "Anomaly\nDetection", group: "risk", r: 12 },
-      { id: "Big Data\n(B+ rows)", group: "risk", r: 12 },
+      { id: "Fraud Risk\nScoring", group: "risk", r: 13 },
+      { id: "Statistical\nModeling", group: "risk", r: 13 },
+      { id: "Feature\nEngineering", group: "risk", r: 13 },
+      { id: "Anomaly\nDetection", group: "risk", r: 13 },
+      { id: "Big Data\n(B+ rows)", group: "risk", r: 13 },
 
       // MLOps & Infra cluster
-      { id: "PySpark", group: "mlops", r: 12 },
-      { id: "Databricks", group: "mlops", r: 12 },
-      { id: "Airflow", group: "mlops", r: 12 },
-      { id: "SageMaker", group: "mlops", r: 12 },
-      { id: "AWS / S3\nIAM", group: "mlops", r: 12 },
-      { id: "DAB\n(Asset Bundles)", group: "mlops", r: 11 },
+      { id: "PySpark", group: "mlops", r: 13 },
+      { id: "Databricks", group: "mlops", r: 13 },
+      { id: "Airflow", group: "mlops", r: 13 },
+      { id: "SageMaker", group: "mlops", r: 13 },
+      { id: "AWS / S3\nIAM", group: "mlops", r: 13 },
+      { id: "DAB\n(Asset Bundles)", group: "mlops", r: 12 },
 
       // Experimentation cluster
-      { id: "EBM", group: "experiment", r: 12 },
-      { id: "Model\nExplainability", group: "experiment", r: 12 },
-      { id: "A/B Testing", group: "experiment", r: 12 },
-      { id: "Bayesian\nMethods", group: "experiment", r: 12 },
-      { id: "Agent-native\nTooling", group: "experiment", r: 12 },
+      { id: "EBM", group: "experiment", r: 13 },
+      { id: "Model\nExplainability", group: "experiment", r: 13 },
+      { id: "A/B Testing", group: "experiment", r: 13 },
+      { id: "Bayesian\nMethods", group: "experiment", r: 13 },
+      { id: "Agent-native\nTooling", group: "experiment", r: 13 },
 
       // Foundation
-      { id: "Python", group: "foundation", r: 12 },
-      { id: "SQL", group: "foundation", r: 12 },
-      { id: "Docker", group: "foundation", r: 12 },
-      { id: "Git", group: "foundation", r: 12 },
+      { id: "Python", group: "foundation", r: 13 },
+      { id: "SQL", group: "foundation", r: 13 },
+      { id: "Docker", group: "foundation", r: 13 },
+      { id: "Git", group: "foundation", r: 13 },
+
+      // Senior Leadership
+      { id: "Governance", group: "senior", r: 14 },
+      { id: "Cost\nOptimization", group: "senior", r: 14 },
+      { id: "Value\nDelivery", group: "senior", r: 14 },
+      { id: "Impact", group: "senior", r: 14 },
+      { id: "KPIs", group: "senior", r: 14 },
     ],
     links: [
-      // Domain anchors → center
-      { source: "Analytics\nEngineering", target: "Risk\nModeling", strength: 0.6 },
-      { source: "Analytics\nEngineering", target: "MLOps\n& Infra", strength: 0.6 },
-      { source: "Analytics\nEngineering", target: "Experiment-\nation", strength: 0.6 },
+      // Center → domain anchors
+      { source: "Analytics\nEngineering", target: "Risk\nModeling", strength: 0.7 },
+      { source: "Analytics\nEngineering", target: "MLOps\n& Infra", strength: 0.7 },
+      { source: "Analytics\nEngineering", target: "Experiment-\nation", strength: 0.7 },
 
       // Domain → skills
       { source: "Risk\nModeling", target: "Fraud Risk\nScoring" },
@@ -265,49 +274,85 @@
       { source: "Experiment-\nation", target: "Agent-native\nTooling" },
 
       // Cross-domain edges
-      { source: "Fraud Risk\nScoring", target: "Statistical\nModeling", strength: 0.3 },
-      { source: "Fraud Risk\nScoring", target: "Anomaly\nDetection", strength: 0.3 },
-      { source: "Fraud Risk\nScoring", target: "Model\nExplainability", strength: 0.2 },
+      { source: "Fraud Risk\nScoring", target: "Statistical\nModeling", strength: 0.35 },
+      { source: "Fraud Risk\nScoring", target: "Anomaly\nDetection", strength: 0.35 },
+      { source: "Fraud Risk\nScoring", target: "Model\nExplainability", strength: 0.25 },
 
-      { source: "Feature\nEngineering", target: "PySpark", strength: 0.3 },
-      { source: "Feature\nEngineering", target: "Python", strength: 0.3 },
-      { source: "Feature\nEngineering", target: "SQL", strength: 0.3 },
+      { source: "Feature\nEngineering", target: "PySpark", strength: 0.35 },
+      { source: "Feature\nEngineering", target: "Python", strength: 0.35 },
+      { source: "Feature\nEngineering", target: "SQL", strength: 0.35 },
 
-      { source: "Big Data\n(B+ rows)", target: "PySpark", strength: 0.3 },
-      { source: "Big Data\n(B+ rows)", target: "Databricks", strength: 0.3 },
-      { source: "Big Data\n(B+ rows)", target: "AWS / S3\nIAM", strength: 0.3 },
+      { source: "Big Data\n(B+ rows)", target: "PySpark", strength: 0.35 },
+      { source: "Big Data\n(B+ rows)", target: "Databricks", strength: 0.35 },
+      { source: "Big Data\n(B+ rows)", target: "AWS / S3\nIAM", strength: 0.35 },
 
-      { source: "Statistical\nModeling", target: "EBM", strength: 0.3 },
-      { source: "Statistical\nModeling", target: "A/B Testing", strength: 0.3 },
-      { source: "Statistical\nModeling", target: "Bayesian\nMethods", strength: 0.3 },
+      { source: "Statistical\nModeling", target: "EBM", strength: 0.35 },
+      { source: "Statistical\nModeling", target: "A/B Testing", strength: 0.35 },
+      { source: "Statistical\nModeling", target: "Bayesian\nMethods", strength: 0.35 },
 
-      { source: "Model\nExplainability", target: "EBM", strength: 0.3 },
-      { source: "Model\nExplainability", target: "SageMaker", strength: 0.2 },
+      { source: "Model\nExplainability", target: "EBM", strength: 0.35 },
+      { source: "Model\nExplainability", target: "SageMaker", strength: 0.25 },
 
       // Infrastructure connections
-      { source: "PySpark", target: "Databricks", strength: 0.4 },
-      { source: "PySpark", target: "Python", strength: 0.4 },
-      { source: "Databricks", target: "AWS / S3\nIAM", strength: 0.3 },
-      { source: "Databricks", target: "DAB\n(Asset Bundles)", strength: 0.3 },
-      { source: "Databricks", target: "Airflow", strength: 0.3 },
-      { source: "Airflow", target: "AWS / S3\nIAM", strength: 0.3 },
-      { source: "Airflow", target: "SageMaker", strength: 0.3 },
-      { source: "SageMaker", target: "Docker", strength: 0.3 },
-      { source: "SageMaker", target: "AWS / S3\nIAM", strength: 0.3 },
-      { source: "DAB\n(Asset Bundles)", target: "Git", strength: 0.3 },
+      { source: "PySpark", target: "Databricks", strength: 0.45 },
+      { source: "PySpark", target: "Python", strength: 0.45 },
+      { source: "Databricks", target: "AWS / S3\nIAM", strength: 0.35 },
+      { source: "Databricks", target: "DAB\n(Asset Bundles)", strength: 0.35 },
+      { source: "Databricks", target: "Airflow", strength: 0.35 },
+      { source: "Airflow", target: "AWS / S3\nIAM", strength: 0.35 },
+      { source: "Airflow", target: "SageMaker", strength: 0.35 },
+      { source: "SageMaker", target: "Docker", strength: 0.35 },
+      { source: "SageMaker", target: "AWS / S3\nIAM", strength: 0.35 },
+      { source: "DAB\n(Asset Bundles)", target: "Git", strength: 0.35 },
 
       // Foundation connections
-      { source: "Python", target: "SQL", strength: 0.3 },
-      { source: "Python", target: "Docker", strength: 0.3 },
-      { source: "Python", target: "Git", strength: 0.3 },
-      { source: "Docker", target: "Git", strength: 0.3 },
-      { source: "Python", target: "Agent-native\nTooling", strength: 0.3 },
-      { source: "Docker", target: "Agent-native\nTooling", strength: 0.2 },
-      { source: "Git", target: "Agent-native\nTooling", strength: 0.2 },
+      { source: "Python", target: "SQL", strength: 0.35 },
+      { source: "Python", target: "Docker", strength: 0.35 },
+      { source: "Python", target: "Git", strength: 0.35 },
+      { source: "Docker", target: "Git", strength: 0.35 },
+      { source: "Python", target: "Agent-native\nTooling", strength: 0.35 },
+      { source: "Docker", target: "Agent-native\nTooling", strength: 0.25 },
+      { source: "Git", target: "Agent-native\nTooling", strength: 0.25 },
 
       // Experimentation cross-links
-      { source: "A/B Testing", target: "Bayesian\nMethods", strength: 0.3 },
-      { source: "EBM", target: "Bayesian\nMethods", strength: 0.3 },
+      { source: "A/B Testing", target: "Bayesian\nMethods", strength: 0.35 },
+      { source: "EBM", target: "Bayesian\nMethods", strength: 0.35 },
+
+      // ── Senior Leadership connections ──────────────────
+      // Governance connects to process and infra
+      { source: "Governance", target: "MLOps\n& Infra", strength: 0.25 },
+      { source: "Governance", target: "DAB\n(Asset Bundles)", strength: 0.35 },
+      { source: "Governance", target: "Airflow", strength: 0.3 },
+      { source: "Governance", target: "Git", strength: 0.3 },
+
+      // Cost Optimization connects to infra and data
+      { source: "Cost\nOptimization", target: "MLOps\n& Infra", strength: 0.25 },
+      { source: "Cost\nOptimization", target: "AWS / S3\nIAM", strength: 0.4 },
+      { source: "Cost\nOptimization", target: "Big Data\n(B+ rows)", strength: 0.35 },
+      { source: "Cost\nOptimization", target: "SageMaker", strength: 0.3 },
+
+      // Value Delivery connects to strategy and experimentation
+      { source: "Value\nDelivery", target: "Analytics\nEngineering", strength: 0.35 },
+      { source: "Value\nDelivery", target: "Experiment-\nation", strength: 0.25 },
+      { source: "Value\nDelivery", target: "A/B Testing", strength: 0.3 },
+      { source: "Value\nDelivery", target: "Impact", strength: 0.5 },
+
+      // Impact connects to risk and business outcomes
+      { source: "Impact", target: "Analytics\nEngineering", strength: 0.35 },
+      { source: "Impact", target: "Fraud Risk\nScoring", strength: 0.35 },
+      { source: "Impact", target: "Model\nExplainability", strength: 0.3 },
+      { source: "Impact", target: "Risk\nModeling", strength: 0.25 },
+
+      // KPIs connects to measurement and modeling
+      { source: "KPIs", target: "Analytics\nEngineering", strength: 0.35 },
+      { source: "KPIs", target: "A/B Testing", strength: 0.35 },
+      { source: "KPIs", target: "Statistical\nModeling", strength: 0.3 },
+      { source: "KPIs", target: "Value\nDelivery", strength: 0.3 },
+      { source: "KPIs", target: "Impact", strength: 0.3 },
+
+      // Senior skills cross-linked to each other
+      { source: "Governance", target: "Cost\nOptimization", strength: 0.3 },
+      { source: "Governance", target: "Value\nDelivery", strength: 0.25 },
     ]
   };
 
@@ -318,8 +363,8 @@
   const height = container.clientHeight;
 
   const color = d3.scaleOrdinal()
-    .domain(["domain", "risk", "mlops", "experiment", "foundation"])
-    .range(["#f0f6fc", "#f78166", "#58a6ff", "#7ee787", "#d2a8ff"]);
+    .domain(["center", "risk", "mlops", "experiment", "foundation", "senior"])
+    .range(["#f0f6fc", "#f78166", "#58a6ff", "#7ee787", "#d2a8ff", "#e3b341"]);
 
   const svg = d3.select("#graph-container")
     .append("svg")
@@ -339,11 +384,11 @@
   const simulation = d3.forceSimulation(graph.nodes)
     .force("link", d3.forceLink(graph.links).id(d => d.id).distance(d => {
       const s = d.strength || 0.5;
-      return 35 + (1 - s) * 80;
+      return 38 + (1 - s) * 80;
     }))
-    .force("charge", d3.forceManyBody().strength(-300))
+    .force("charge", d3.forceManyBody().strength(-320))
     .force("center", d3.forceCenter(0, 0))
-    .force("collision", d3.forceCollide().radius(d => d.r + 6));
+    .force("collision", d3.forceCollide().radius(d => d.r + 8));
 
   // Links
   const link = g.append("g")
@@ -370,33 +415,30 @@
       })
     );
 
-  // Node circles
+  // Node circles — all nodes get same rendering
   node.append("circle")
     .attr("r", d => d.r)
     .attr("fill", d => color(d.group))
-    .attr("stroke", d => d.group === "domain" ? "rgba(240,246,252,0.2)" : "rgba(255,255,255,0.08)")
-    .attr("stroke-width", d => d.group === "domain" ? 2 : 1)
-    .attr("opacity", d => d.group === "domain" ? 1 : 0.85);
+    .attr("stroke", d => d.group === "center" ? "rgba(240,246,252,0.15)" : "rgba(255,255,255,0.06)")
+    .attr("stroke-width", d => d.group === "center" ? 2.5 : 1)
+    .attr("opacity", 0.92);
 
-  // Node labels
+  // Node labels — all below the circle
   node.append("text")
     .text(d => d.id)
     .attr("text-anchor", "middle")
-    .attr("dy", d => d.r <= 14 ? d.r + 14 : "0.35em")
-    .attr("fill", d => d.group === "domain" ? "#0d1117" : "#c9d1d9")
-    .attr("font-size", d => d.group === "domain" ? "10px" : "8.5px")
-    .attr("font-weight", d => d.group === "domain" ? "700" : "500")
+    .attr("dy", d => d.r + 13)
+    .attr("fill", d => d.group === "center" ? "#f0f6fc" : "#c9d1d9")
+    .attr("font-size", d => d.group === "center" ? "11px" : d.r >= 14 ? "9px" : "8.5px")
+    .attr("font-weight", d => d.group === "center" ? "700" : "500")
     .attr("font-family", "system-ui, -apple-system, sans-serif")
     .style("pointer-events", "none")
     .style("user-select", "none");
 
   // ── Interactions ───────────────────────────────────────
-  let hoveredNode = null;
-
   node
     .on("mouseenter", (event, d) => {
       hoveredNode = d;
-      // Highlight connected
       const connected = new Set();
       graph.links.forEach(l => {
         const s = typeof l.source === "object" ? l.source.id : l.source;
@@ -406,12 +448,15 @@
       });
 
       node.select("circle").attr("opacity", n =>
-        n === d || connected.has(n.id) ? 1 : 0.15
+        n === d || connected.has(n.id) ? 1 : 0.12
+      );
+      node.select("text").attr("opacity", n =>
+        n === d || connected.has(n.id) ? 1 : 0.12
       );
       link.attr("opacity", l => {
         const s = typeof l.source === "object" ? l.source.id : l.source;
         const t = typeof l.target === "object" ? l.target.id : l.target;
-        return (s === d.id || t === d.id) ? 0.9 : 0.05;
+        return (s === d.id || t === d.id) ? 0.9 : 0.04;
       }).attr("stroke", l => {
         const s = typeof l.source === "object" ? l.source.id : l.source;
         const t = typeof l.target === "object" ? l.target.id : l.target;
@@ -422,15 +467,14 @@
     })
     .on("mousemove", (event) => {
       const rect = container.getBoundingClientRect();
-      const cx = (width / 2) + (event.x - rect.left - rect.width/2);
-      const cy = (height / 2) + (event.y - rect.top - rect.height/2);
       tooltip.style("left", (event.x - rect.left + 14) + "px")
              .style("top", (event.y - rect.top - 30) + "px");
     })
     .on("mouseleave", () => {
       hoveredNode = null;
-      node.select("circle").attr("opacity", d => d.group === "domain" ? 1 : 0.85);
-      link.attr("opacity", 0.5).attr("stroke", "#21262d");
+      node.select("circle").attr("opacity", 0.92);
+      node.select("text").attr("opacity", 1);
+      link.attr("opacity", 0.45).attr("stroke", "#21262d");
       tooltip.style("opacity", 0);
     });
 
