@@ -57,7 +57,7 @@
       margin-bottom: 1.5rem;
       overflow: hidden;
       position: relative;
-      height: 560px;
+      height: 580px;
     }
     .graph-section svg {
       width: 100%;
@@ -92,7 +92,7 @@
     .legend-dot.mlops { background: #58a6ff; }
     .legend-dot.experiment { background: #7ee787; }
     .legend-dot.foundation { background: #d2a8ff; }
-    .legend-dot.senior { background: #e3b341; }
+    .legend-dot.strategy { background: #e3b341; }
 
     .links {
       display: flex;
@@ -141,7 +141,7 @@
 
     @media (max-width: 600px) {
       .ascii { font-size: 0.48rem; }
-      .graph-section { height: 420px; }
+      .graph-section { height: 440px; }
       .legend { gap: 0.6rem; font-size: 0.72rem; }
     }
   </style>
@@ -184,7 +184,7 @@
       <span class="legend-item"><span class="legend-dot mlops"></span> MLOps &amp; Infra</span>
       <span class="legend-item"><span class="legend-dot experiment"></span> Experimentation</span>
       <span class="legend-item"><span class="legend-dot foundation"></span> Foundation</span>
-      <span class="legend-item"><span class="legend-dot senior"></span> Senior Leadership</span>
+      <span class="legend-item"><span class="legend-dot strategy"></span> Strategy</span>
     </div>
 
     <div class="graph-section" id="graph-container">
@@ -206,33 +206,33 @@
   const graph = {
     nodes: [
       // Center anchor
-      { id: "Analytics\nEngineering", group: "center", r: 30 },
+      { id: "Analytics Engineering", group: "center", r: 30 },
       // Domain anchors
-      { id: "Risk\nModeling", group: "risk", r: 24 },
-      { id: "MLOps\n& Infra", group: "mlops", r: 24 },
-      { id: "Experiment-\nation", group: "experiment", r: 24 },
+      { id: "Risk Modeling", group: "risk", r: 24 },
+      { id: "MLOps & Infra", group: "mlops", r: 24 },
+      { id: "Experimentation", group: "experiment", r: 24 },
 
       // Risk Modeling cluster
-      { id: "Fraud Risk\nScoring", group: "risk", r: 13 },
-      { id: "Statistical\nModeling", group: "risk", r: 13 },
-      { id: "Feature\nEngineering", group: "risk", r: 13 },
-      { id: "Anomaly\nDetection", group: "risk", r: 13 },
-      { id: "Big Data\n(B+ rows)", group: "risk", r: 13 },
+      { id: "Fraud Risk Scoring", group: "risk", r: 13 },
+      { id: "Statistical Modeling", group: "risk", r: 13 },
+      { id: "Feature Engineering", group: "risk", r: 13 },
+      { id: "Anomaly Detection", group: "risk", r: 13 },
+      { id: "Big Data (B+ rows)", group: "risk", r: 13 },
 
       // MLOps & Infra cluster
       { id: "PySpark", group: "mlops", r: 13 },
       { id: "Databricks", group: "mlops", r: 13 },
       { id: "Airflow", group: "mlops", r: 13 },
       { id: "SageMaker", group: "mlops", r: 13 },
-      { id: "AWS / S3\nIAM", group: "mlops", r: 13 },
-      { id: "DAB\n(Asset Bundles)", group: "mlops", r: 12 },
+      { id: "AWS / S3 / IAM", group: "mlops", r: 13 },
+      { id: "DAB (Asset Bundles)", group: "mlops", r: 12 },
 
       // Experimentation cluster
       { id: "EBM", group: "experiment", r: 13 },
-      { id: "Model\nExplainability", group: "experiment", r: 13 },
+      { id: "Model Explainability", group: "experiment", r: 13 },
       { id: "A/B Testing", group: "experiment", r: 13 },
-      { id: "Bayesian\nMethods", group: "experiment", r: 13 },
-      { id: "Agent-native\nTooling", group: "experiment", r: 13 },
+      { id: "Bayesian Methods", group: "experiment", r: 13 },
+      { id: "Agent-native Tooling", group: "experiment", r: 13 },
 
       // Foundation
       { id: "Python", group: "foundation", r: 13 },
@@ -240,119 +240,113 @@
       { id: "Docker", group: "foundation", r: 13 },
       { id: "Git", group: "foundation", r: 13 },
 
-      // Senior Leadership
-      { id: "Governance", group: "senior", r: 14 },
-      { id: "Cost\nOptimization", group: "senior", r: 14 },
-      { id: "Value\nDelivery", group: "senior", r: 14 },
-      { id: "Impact", group: "senior", r: 14 },
-      { id: "KPIs", group: "senior", r: 14 },
+      // Strategy
+      { id: "Governance", group: "strategy", r: 14 },
+      { id: "Cost Optimization", group: "strategy", r: 14 },
+      { id: "Value Delivery", group: "strategy", r: 14 },
+      { id: "Impact", group: "strategy", r: 14 },
+      { id: "KPIs", group: "strategy", r: 14 },
     ],
     links: [
       // Center → domain anchors
-      { source: "Analytics\nEngineering", target: "Risk\nModeling", strength: 0.7 },
-      { source: "Analytics\nEngineering", target: "MLOps\n& Infra", strength: 0.7 },
-      { source: "Analytics\nEngineering", target: "Experiment-\nation", strength: 0.7 },
+      { source: "Analytics Engineering", target: "Risk Modeling", strength: 0.7 },
+      { source: "Analytics Engineering", target: "MLOps & Infra", strength: 0.7 },
+      { source: "Analytics Engineering", target: "Experimentation", strength: 0.7 },
 
       // Domain → skills
-      { source: "Risk\nModeling", target: "Fraud Risk\nScoring" },
-      { source: "Risk\nModeling", target: "Statistical\nModeling" },
-      { source: "Risk\nModeling", target: "Feature\nEngineering" },
-      { source: "Risk\nModeling", target: "Anomaly\nDetection" },
-      { source: "Risk\nModeling", target: "Big Data\n(B+ rows)" },
+      { source: "Risk Modeling", target: "Fraud Risk Scoring" },
+      { source: "Risk Modeling", target: "Statistical Modeling" },
+      { source: "Risk Modeling", target: "Feature Engineering" },
+      { source: "Risk Modeling", target: "Anomaly Detection" },
+      { source: "Risk Modeling", target: "Big Data (B+ rows)" },
 
-      { source: "MLOps\n& Infra", target: "PySpark" },
-      { source: "MLOps\n& Infra", target: "Databricks" },
-      { source: "MLOps\n& Infra", target: "Airflow" },
-      { source: "MLOps\n& Infra", target: "SageMaker" },
-      { source: "MLOps\n& Infra", target: "AWS / S3\nIAM" },
-      { source: "MLOps\n& Infra", target: "DAB\n(Asset Bundles)" },
+      { source: "MLOps & Infra", target: "PySpark" },
+      { source: "MLOps & Infra", target: "Databricks" },
+      { source: "MLOps & Infra", target: "Airflow" },
+      { source: "MLOps & Infra", target: "SageMaker" },
+      { source: "MLOps & Infra", target: "AWS / S3 / IAM" },
+      { source: "MLOps & Infra", target: "DAB (Asset Bundles)" },
 
-      { source: "Experiment-\nation", target: "EBM" },
-      { source: "Experiment-\nation", target: "Model\nExplainability" },
-      { source: "Experiment-\nation", target: "A/B Testing" },
-      { source: "Experiment-\nation", target: "Bayesian\nMethods" },
-      { source: "Experiment-\nation", target: "Agent-native\nTooling" },
+      { source: "Experimentation", target: "EBM" },
+      { source: "Experimentation", target: "Model Explainability" },
+      { source: "Experimentation", target: "A/B Testing" },
+      { source: "Experimentation", target: "Bayesian Methods" },
+      { source: "Experimentation", target: "Agent-native Tooling" },
 
       // Cross-domain edges
-      { source: "Fraud Risk\nScoring", target: "Statistical\nModeling", strength: 0.35 },
-      { source: "Fraud Risk\nScoring", target: "Anomaly\nDetection", strength: 0.35 },
-      { source: "Fraud Risk\nScoring", target: "Model\nExplainability", strength: 0.25 },
+      { source: "Fraud Risk Scoring", target: "Statistical Modeling", strength: 0.35 },
+      { source: "Fraud Risk Scoring", target: "Anomaly Detection", strength: 0.35 },
+      { source: "Fraud Risk Scoring", target: "Model Explainability", strength: 0.25 },
 
-      { source: "Feature\nEngineering", target: "PySpark", strength: 0.35 },
-      { source: "Feature\nEngineering", target: "Python", strength: 0.35 },
-      { source: "Feature\nEngineering", target: "SQL", strength: 0.35 },
+      { source: "Feature Engineering", target: "PySpark", strength: 0.35 },
+      { source: "Feature Engineering", target: "Python", strength: 0.35 },
+      { source: "Feature Engineering", target: "SQL", strength: 0.35 },
 
-      { source: "Big Data\n(B+ rows)", target: "PySpark", strength: 0.35 },
-      { source: "Big Data\n(B+ rows)", target: "Databricks", strength: 0.35 },
-      { source: "Big Data\n(B+ rows)", target: "AWS / S3\nIAM", strength: 0.35 },
+      { source: "Big Data (B+ rows)", target: "PySpark", strength: 0.35 },
+      { source: "Big Data (B+ rows)", target: "Databricks", strength: 0.35 },
+      { source: "Big Data (B+ rows)", target: "AWS / S3 / IAM", strength: 0.35 },
 
-      { source: "Statistical\nModeling", target: "EBM", strength: 0.35 },
-      { source: "Statistical\nModeling", target: "A/B Testing", strength: 0.35 },
-      { source: "Statistical\nModeling", target: "Bayesian\nMethods", strength: 0.35 },
+      { source: "Statistical Modeling", target: "EBM", strength: 0.35 },
+      { source: "Statistical Modeling", target: "A/B Testing", strength: 0.35 },
+      { source: "Statistical Modeling", target: "Bayesian Methods", strength: 0.35 },
 
-      { source: "Model\nExplainability", target: "EBM", strength: 0.35 },
-      { source: "Model\nExplainability", target: "SageMaker", strength: 0.25 },
+      { source: "Model Explainability", target: "EBM", strength: 0.35 },
+      { source: "Model Explainability", target: "SageMaker", strength: 0.25 },
 
       // Infrastructure connections
       { source: "PySpark", target: "Databricks", strength: 0.45 },
       { source: "PySpark", target: "Python", strength: 0.45 },
-      { source: "Databricks", target: "AWS / S3\nIAM", strength: 0.35 },
-      { source: "Databricks", target: "DAB\n(Asset Bundles)", strength: 0.35 },
+      { source: "Databricks", target: "AWS / S3 / IAM", strength: 0.35 },
+      { source: "Databricks", target: "DAB (Asset Bundles)", strength: 0.35 },
       { source: "Databricks", target: "Airflow", strength: 0.35 },
-      { source: "Airflow", target: "AWS / S3\nIAM", strength: 0.35 },
+      { source: "Airflow", target: "AWS / S3 / IAM", strength: 0.35 },
       { source: "Airflow", target: "SageMaker", strength: 0.35 },
       { source: "SageMaker", target: "Docker", strength: 0.35 },
-      { source: "SageMaker", target: "AWS / S3\nIAM", strength: 0.35 },
-      { source: "DAB\n(Asset Bundles)", target: "Git", strength: 0.35 },
+      { source: "SageMaker", target: "AWS / S3 / IAM", strength: 0.35 },
+      { source: "DAB (Asset Bundles)", target: "Git", strength: 0.35 },
 
       // Foundation connections
       { source: "Python", target: "SQL", strength: 0.35 },
       { source: "Python", target: "Docker", strength: 0.35 },
       { source: "Python", target: "Git", strength: 0.35 },
       { source: "Docker", target: "Git", strength: 0.35 },
-      { source: "Python", target: "Agent-native\nTooling", strength: 0.35 },
-      { source: "Docker", target: "Agent-native\nTooling", strength: 0.25 },
-      { source: "Git", target: "Agent-native\nTooling", strength: 0.25 },
+      { source: "Python", target: "Agent-native Tooling", strength: 0.35 },
+      { source: "Docker", target: "Agent-native Tooling", strength: 0.25 },
+      { source: "Git", target: "Agent-native Tooling", strength: 0.25 },
 
       // Experimentation cross-links
-      { source: "A/B Testing", target: "Bayesian\nMethods", strength: 0.35 },
-      { source: "EBM", target: "Bayesian\nMethods", strength: 0.35 },
+      { source: "A/B Testing", target: "Bayesian Methods", strength: 0.35 },
+      { source: "EBM", target: "Bayesian Methods", strength: 0.35 },
 
-      // ── Senior Leadership connections ──────────────────
-      // Governance connects to process and infra
-      { source: "Governance", target: "MLOps\n& Infra", strength: 0.25 },
-      { source: "Governance", target: "DAB\n(Asset Bundles)", strength: 0.35 },
+      // ── Strategy connections ────────────────────────────
+      { source: "Governance", target: "MLOps & Infra", strength: 0.25 },
+      { source: "Governance", target: "DAB (Asset Bundles)", strength: 0.35 },
       { source: "Governance", target: "Airflow", strength: 0.3 },
       { source: "Governance", target: "Git", strength: 0.3 },
 
-      // Cost Optimization connects to infra and data
-      { source: "Cost\nOptimization", target: "MLOps\n& Infra", strength: 0.25 },
-      { source: "Cost\nOptimization", target: "AWS / S3\nIAM", strength: 0.4 },
-      { source: "Cost\nOptimization", target: "Big Data\n(B+ rows)", strength: 0.35 },
-      { source: "Cost\nOptimization", target: "SageMaker", strength: 0.3 },
+      { source: "Cost Optimization", target: "MLOps & Infra", strength: 0.25 },
+      { source: "Cost Optimization", target: "AWS / S3 / IAM", strength: 0.4 },
+      { source: "Cost Optimization", target: "Big Data (B+ rows)", strength: 0.35 },
+      { source: "Cost Optimization", target: "SageMaker", strength: 0.3 },
 
-      // Value Delivery connects to strategy and experimentation
-      { source: "Value\nDelivery", target: "Analytics\nEngineering", strength: 0.35 },
-      { source: "Value\nDelivery", target: "Experiment-\nation", strength: 0.25 },
-      { source: "Value\nDelivery", target: "A/B Testing", strength: 0.3 },
-      { source: "Value\nDelivery", target: "Impact", strength: 0.5 },
+      { source: "Value Delivery", target: "Analytics Engineering", strength: 0.35 },
+      { source: "Value Delivery", target: "Experimentation", strength: 0.25 },
+      { source: "Value Delivery", target: "A/B Testing", strength: 0.3 },
+      { source: "Value Delivery", target: "Impact", strength: 0.5 },
 
-      // Impact connects to risk and business outcomes
-      { source: "Impact", target: "Analytics\nEngineering", strength: 0.35 },
-      { source: "Impact", target: "Fraud Risk\nScoring", strength: 0.35 },
-      { source: "Impact", target: "Model\nExplainability", strength: 0.3 },
-      { source: "Impact", target: "Risk\nModeling", strength: 0.25 },
+      { source: "Impact", target: "Analytics Engineering", strength: 0.35 },
+      { source: "Impact", target: "Fraud Risk Scoring", strength: 0.35 },
+      { source: "Impact", target: "Model Explainability", strength: 0.3 },
+      { source: "Impact", target: "Risk Modeling", strength: 0.25 },
 
-      // KPIs connects to measurement and modeling
-      { source: "KPIs", target: "Analytics\nEngineering", strength: 0.35 },
+      { source: "KPIs", target: "Analytics Engineering", strength: 0.35 },
       { source: "KPIs", target: "A/B Testing", strength: 0.35 },
-      { source: "KPIs", target: "Statistical\nModeling", strength: 0.3 },
-      { source: "KPIs", target: "Value\nDelivery", strength: 0.3 },
+      { source: "KPIs", target: "Statistical Modeling", strength: 0.3 },
+      { source: "KPIs", target: "Value Delivery", strength: 0.3 },
       { source: "KPIs", target: "Impact", strength: 0.3 },
 
-      // Senior skills cross-linked to each other
-      { source: "Governance", target: "Cost\nOptimization", strength: 0.3 },
-      { source: "Governance", target: "Value\nDelivery", strength: 0.25 },
+      { source: "Governance", target: "Cost Optimization", strength: 0.3 },
+      { source: "Governance", target: "Value Delivery", strength: 0.25 },
     ]
   };
 
@@ -363,7 +357,7 @@
   const height = container.clientHeight;
 
   const color = d3.scaleOrdinal()
-    .domain(["center", "risk", "mlops", "experiment", "foundation", "senior"])
+    .domain(["center", "risk", "mlops", "experiment", "foundation", "strategy"])
     .range(["#f0f6fc", "#f78166", "#58a6ff", "#7ee787", "#d2a8ff", "#e3b341"]);
 
   const svg = d3.select("#graph-container")
@@ -415,7 +409,7 @@
       })
     );
 
-  // Node circles — all nodes get same rendering
+  // Node circles
   node.append("circle")
     .attr("r", d => d.r)
     .attr("fill", d => color(d.group))
@@ -423,13 +417,13 @@
     .attr("stroke-width", d => d.group === "center" ? 2.5 : 1)
     .attr("opacity", 0.92);
 
-  // Node labels — all below the circle
+  // Node labels — below circle, normalized text
   node.append("text")
     .text(d => d.id)
     .attr("text-anchor", "middle")
     .attr("dy", d => d.r + 13)
     .attr("fill", d => d.group === "center" ? "#f0f6fc" : "#c9d1d9")
-    .attr("font-size", d => d.group === "center" ? "11px" : d.r >= 14 ? "9px" : "8.5px")
+    .attr("font-size", d => d.group === "center" ? "11px" : d.r >= 14 ? "9px" : "8px")
     .attr("font-weight", d => d.group === "center" ? "700" : "500")
     .attr("font-family", "system-ui, -apple-system, sans-serif")
     .style("pointer-events", "none")
@@ -463,7 +457,7 @@
         return (s === d.id || t === d.id) ? color(d.group) : "#21262d";
       });
 
-      tooltip.style("opacity", 1).text(d.id.replace(/\n/g, " "));
+      tooltip.style("opacity", 1).text(d.id);
     })
     .on("mousemove", (event) => {
       const rect = container.getBoundingClientRect();
