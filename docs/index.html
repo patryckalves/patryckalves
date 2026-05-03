@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patryck — Analytics Engineer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+    .ascii {
+      font-family: 'Courier New', monospace;
+      color: #58a6ff;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      color: #f0f6fc;
+      margin-bottom: 0.5rem;
+    }
+    .tagline {
+      text-align: center;
+      color: #8b949e;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .badges img {
+      height: 20px;
+    }
+    .about {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: #8b949e;
+      font-size: 0.95rem;
+    }
+    .about strong {
+      color: #f0f6fc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .card h3 {
+      color: #58a6ff;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .card ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: #c9d1d9;
+    }
+    .card ul li { margin-bottom: 0.4rem; }
+    .card ul li::before { content: "▸ "; color: #58a6ff; }
+    .links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-linkedin { background: #0a66c2; color: #fff; }
+    .btn-linkedin:hover { background: #004182; }
+    .btn-github { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
+    .btn-github:hover { background: #30363d; }
+    .btn-email { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
+    .btn-email:hover { background: #30363d; }
+    .location {
+      text-align: center;
+      color: #484f58;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 500px) {
+      .ascii { font-size: 0.55rem; }
+      h1 { font-size: 1.5rem; }
+      .links { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <pre class="ascii">
+██████╗  █████╗ ████████╗██████╗ ██╗   ██╗ ██████╗██╗  ██╗
+██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗╚██╗ ██╔╝██╔════╝██║ ██╔╝
+██████╔╝███████║   ██║   ██████╔╝ ╚████╔╝ ██║     █████╔╝ 
+██╔═══╝ ██╔══██║   ██║   ██╔══██╗  ╚██╔╝  ██║     ██╔═██╗ 
+██║     ██║  ██║   ██║   ██║  ██║   ██║   ╚██████╗██║  ██╗
+╚═╝     ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+    </pre>
+
+    <p class="tagline">Analytics Engineer — risk modeling, big data, and the space where ML meets production</p>
+
+    <div class="badges">
+      <img src="https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="PySpark">
+      <img src="https://img.shields.io/badge/Databricks-FF3621?style=flat-square&logo=databricks&logoColor=white" alt="Databricks">
+      <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white" alt="AWS">
+      <img src="https://img.shields.io/badge/SageMaker-232F3E?style=flat-square&logo=amazonaws&logoColor=white" alt="SageMaker">
+      <img src="https://img.shields.io/badge/Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=white" alt="Airflow">
+      <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+      <img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="SQL">
+      <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
+      <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git">
+    </div>
+
+    <p class="about">
+      <strong>5 years in fraud prevention at iFood</strong> — Latin America's largest food delivery platform.<br>
+      Started in analytics and KPIs, migrated into data science and MLOps as the problems outgrew dashboards.<br>
+      Now I build risk scoring models on billion-row datasets, deploy them to production,<br>
+      and make sure they're <em>explainable</em> — not just accurate.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Risk Modeling</h3>
+        <ul>
+          <li>Fraud risk scoring</li>
+          <li>Statistical modeling</li>
+          <li>Big data (B+ rows)</li>
+          <li>Feature engineering</li>
+          <li>Anomaly detection</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>MLOps & Infra</h3>
+        <ul>
+          <li>PySpark · Databricks</li>
+          <li>Airflow pipelines</li>
+          <li>SageMaker endpoints</li>
+          <li>DAB (asset bundles)</li>
+          <li>S3 · IAM · AWS stack</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Experimentation</h3>
+        <ul>
+          <li>EBM · Bayesian think</li>
+          <li>Model explainability</li>
+          <li>A/B testing</li>
+          <li>Quantified workflows</li>
+          <li>Agent-native tooling</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="https://linkedin.com/in/patryckharley" class="btn btn-linkedin">in LinkedIn</a>
+      <a href="https://github.com/patryckalves" class="btn btn-github">⌘ GitHub</a>
+      <a href="mailto:patryck@outlook.com" class="btn btn-email">✉ Email</a>
+    </div>
+
+    <p class="location">Fortaleza, Ceara — Brasil</p>
+  </div>
+</body>
+</html>
