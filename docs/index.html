@@ -82,7 +82,17 @@
       margin-bottom: 1.5rem;
       font-size: 0.8rem;
     }
-    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .legend-item:hover { background: #161b22; }
+    .legend-item.active { background: #1a2332; box-shadow: 0 0 0 1px rgba(255,255,255,0.1); }
     .legend-dot {
       width: 10px; height: 10px;
       border-radius: 50%;
@@ -180,16 +190,16 @@
     </p>
 
     <div class="legend">
-      <span class="legend-item"><span class="legend-dot risk"></span> Risk Modeling</span>
-      <span class="legend-item"><span class="legend-dot mlops"></span> MLOps &amp; Infra</span>
-      <span class="legend-item"><span class="legend-dot experiment"></span> Experimentation</span>
-      <span class="legend-item"><span class="legend-dot foundation"></span> Foundation</span>
-      <span class="legend-item"><span class="legend-dot strategy"></span> Strategy</span>
+      <span class="legend-item" data-group="risk"><span class="legend-dot risk"></span> Risk Modeling</span>
+      <span class="legend-item" data-group="mlops"><span class="legend-dot mlops"></span> MLOps &amp; Infra</span>
+      <span class="legend-item" data-group="experiment"><span class="legend-dot experiment"></span> Experimentation</span>
+      <span class="legend-item" data-group="foundation"><span class="legend-dot foundation"></span> Foundation</span>
+      <span class="legend-item" data-group="strategy"><span class="legend-dot strategy"></span> Strategy</span>
     </div>
 
     <div class="graph-section" id="graph-container">
       <div class="tooltip" id="tooltip"></div>
-      <div class="graph-hint">drag nodes · scroll to zoom · hover to highlight</div>
+      <div class="graph-hint">drag nodes · scroll to zoom · hover/click legend to filter · hover node to explore</div>
     </div>
 
     <div class="links">
@@ -430,6 +440,7 @@
     .style("user-select", "none");
 
   // ── Interactions ───────────────────────────────────────
+  let hoveredNode;
   node
     .on("mouseenter", (event, d) => {
       hoveredNode = d;
@@ -466,10 +477,76 @@
     })
     .on("mouseleave", () => {
       hoveredNode = null;
-      node.select("circle").attr("opacity", 0.92);
-      node.select("text").attr("opacity", 1);
-      link.attr("opacity", 0.45).attr("stroke", "#21262d");
+      if (pinnedGroup) {
+        highlightGroup(pinnedGroup, true);
+      } else {
+        node.select("circle").attr("opacity", 0.92);
+        node.select("text").attr("opacity", 1);
+        link.attr("opacity", 0.45).attr("stroke", "#21262d");
+      }
       tooltip.style("opacity", 0);
+    });
+
+  // ── Legend interactions ─────────────────────────────────
+  let pinnedGroup = null;
+
+  function highlightGroup(group, active) {
+    if (hoveredNode) return; // node hover takes priority
+    if (!active) {
+      if (pinnedGroup) {
+        // Still pinned — show pinned group
+        group = pinnedGroup;
+      } else {
+        node.select("circle").attr("opacity", 0.92);
+        node.select("text").attr("opacity", 1);
+        link.attr("opacity", 0.45).attr("stroke", "#21262d");
+        return;
+      }
+    }
+    node.select("circle").attr("opacity", n => n.group === group ? 1 : 0.12);
+    node.select("text").attr("opacity", n => n.group === group ? 1 : 0.12);
+    link.attr("opacity", l => {
+      const s = typeof l.source === "object" ? l.source.id : l.source;
+      const t = typeof l.target === "object" ? l.target.id : l.target;
+      const sn = graph.nodes.find(n => n.id === s);
+      const tn = graph.nodes.find(n => n.id === t);
+      return (sn && sn.group === group) || (tn && tn.group === group) ? 0.9 : 0.04;
+    }).attr("stroke", l => {
+      const s = typeof l.source === "object" ? l.source.id : l.source;
+      const t = typeof l.target === "object" ? l.target.id : l.target;
+      const sn = graph.nodes.find(n => n.id === s);
+      const tn = graph.nodes.find(n => n.id === t);
+      return (sn && sn.group === group) || (tn && tn.group === group) ? color(group) : "#21262d";
+    });
+  }
+
+  d3.selectAll(".legend-item")
+    .on("mouseenter", function() {
+      const group = this.dataset.group;
+      highlightGroup(group, true);
+    })
+    .on("mouseleave", function() {
+      if (pinnedGroup) {
+        highlightGroup(pinnedGroup, true);
+      } else {
+        highlightGroup(null, false);
+      }
+    })
+    .on("click", function() {
+      const group = this.dataset.group;
+      const el = d3.select(this);
+      if (pinnedGroup === group) {
+        // Unpin
+        pinnedGroup = null;
+        el.classed("active", false);
+        highlightGroup(null, false);
+      } else {
+        // Pin
+        d3.selectAll(".legend-item").classed("active", false);
+        pinnedGroup = group;
+        el.classed("active", true);
+        highlightGroup(group, true);
+      }
     });
 
   // ── Tick ────────────────────────────────────────────────
